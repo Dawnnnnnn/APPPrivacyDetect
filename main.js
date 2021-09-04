@@ -67,6 +67,16 @@ function hookGetIMSI() {
         console.log("getSimSerialNumber(String): " + temp);
         return temp;
     };
+
+    // 应该也是获取IMSI的方法
+    TelephonyManager.getSubscriberId.overload('int').implementation = function () {
+        showStacks();
+        console.log("=============================[*]Called - getSubscriberId(int)=======================\r\n");
+        var temp = this.getSubscriberId();
+        console.log("getSubscriberId(int): " + temp);
+        return temp;
+    }
+
     // 获取多个IMSI的方法
     TelephonyManager.getSimSerialNumber.overload('int').implementation = function (p) {
         showStacks();
@@ -85,7 +95,6 @@ function hookGetIMEI() {
     TelephonyManager.getDeviceId.overload().implementation = function () {
         showStacks();
         console.log("============================= [*]Called - getDeviceId()=======================\r\n");
-        //console.log("[*]Called - getDeviceId()");
         var temp = this.getDeviceId();
         console.log("getDeviceId: " + temp);
         return temp;
@@ -94,7 +103,6 @@ function hookGetIMEI() {
     TelephonyManager.getDeviceId.overload('int').implementation = function (p) {
         showStacks();
         console.log("============================= [*]Called - getDeviceId()=======================param is" + p + "\r\n");
-        //console.log("[*]Called - getDeviceId(int) param is"+p);
         var temp = this.getDeviceId(p);
         console.log("getDeviceId " + p + ": " + temp);
         return temp;
@@ -179,6 +187,14 @@ function hookGetInstallPackages() {
         console.log("getInstalledApplications: " + temp);
         return temp;
     };
+    appPackageManager.queryIntentActivities.implementation = function (p1,p2) {
+        showStacks();
+        console.log("============================= [*]Called - app-queryIntentActivities()=======================\r\n");
+        var temp = this.queryIntentActivities(p1,p2);
+        console.log("queryIntentActivities: " + p1 + p2);
+        return temp;
+    };
+
 }
 
 

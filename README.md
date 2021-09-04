@@ -41,3 +41,5 @@ frida -U -l main.js -f com.dawnnnnnn.test1 --no-pause
 [m4bln](https://mabin004.github.io/2018/12/20/%E5%88%A9%E7%94%A8Frida%E4%BF%AE%E6%94%B9Android%E8%AE%BE%E5%A4%87%E7%9A%84%E5%94%AF%E4%B8%80%E6%A0%87%E5%BF%97%E7%AC%A6/)
 
 [移动安全王铁头](https://www.bilibili.com/read/cv9078155)
+
+[ChenJunsen](https://github.com/ChenJunsen/Hegui3.0)
