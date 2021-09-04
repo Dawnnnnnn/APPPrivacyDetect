@@ -32,3 +32,12 @@ frida -U -l main.js -f com.dawnnnnnn.test1 --no-pause
 
 1. 有时候不是APP本身出了问题，特别是手游，因为存在游戏渠道的原因，各渠道会打包自己的SDK进去，第三方的SDK出了问题，通报还是到我们这里来，不是很合理。
 2. 网络应急技术处理协调中心某省分中心通报的很多安全漏洞简直就是无中生有，希望能好好做检测
+
+
+## 鸣谢
+
+本项目的很多函数来自以下项目或作者
+
+[m4bln](https://mabin004.github.io/2018/12/20/%E5%88%A9%E7%94%A8Frida%E4%BF%AE%E6%94%B9Android%E8%AE%BE%E5%A4%87%E7%9A%84%E5%94%AF%E4%B8%80%E6%A0%87%E5%BF%97%E7%AC%A6/)
+
+[移动安全王铁头](https://www.bilibili.com/read/cv9078155)
