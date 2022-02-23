@@ -41,7 +41,7 @@ IPhone8(JailBreak)
 
 想要获取什么信息就在Java.perform里面加什么函数就可以了
 
-frida -U -l main.js -f com.dawnnnnnn.test1 --no-pause
+frida -U -l android_main.js -f com.dawnnnnnn.test1 --no-pause
 
 ### IOS
 
