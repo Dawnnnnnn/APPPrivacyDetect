@@ -199,7 +199,7 @@ function hookGetInstallPackages() {
 
 
 Java.perform(function () {
-    hookRequestPermission();
+    // hookRequestPermission();
     hookGetIMEI();
     hookGetIMSI();
     hookGetAndroidId();
