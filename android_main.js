@@ -47,8 +47,8 @@ function hookRequestPermission(){
 function hookGetAndroidId() {
     var Secure = Java.use("android.provider.Settings$Secure");
     Secure.getString.implementation = function (p1, p2) {
-        showStacks();
         if (p2.indexOf("android_id") < 0) return this.getString(p1, p2);
+        showStacks();
         console.log("=============================[*]Called - get android_ID=======================param is" + p2 + "\r\n");
         var temp = this.getString(p1, p2);
         console.log("get android_ID: " + temp);
