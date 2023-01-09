@@ -443,18 +443,59 @@ function hookGetLocation() {
     try {
         var LocationManager = Java.use("android.location.LocationManager");
         if (LocationManager.requestLocationUpdates != undefined) {
-            LocationManager.requestLocationUpdates.overload('java.lang.String', 'long', 'float', 'android.location.LocationListener').implementation = function (p1, p2, p3, p4) {
+            LocationManager.requestLocationUpdates.overload('android.location.LocationRequest', 'android.app.PendingIntent').implementation = function (p1, p2) {
+                showStacks();
+                console.log("============================= [*]Called - requestLocationUpdates(p1,p2)=======================\r\n");
+                var temp = this.requestLocationUpdates(p1, p2);
+                console.log("requestLocationUpdates: " + temp);
+                return temp;
+            }
+            LocationManager.requestLocationUpdates.overload('android.location.LocationRequest', 'android.location.LocationListener','android.os.Looper').implementation = function (p1, p2, p3) {
+                showStacks();
+                console.log("============================= [*]Called - requestLocationUpdates(p1,p2,p3)=======================\r\n");
+                var temp = this.requestLocationUpdates(p1, p2, p3);
+                console.log("requestLocationUpdates: " + temp);
+                return temp;
+            }
+            LocationManager.requestLocationUpdates.overload('android.location.LocationRequest', 'java.util.concurrent.Executor', 'android.location.LocationListener').implementation = function (p1, p2, p3) {
+                showStacks();
+                console.log("============================= [*]Called - requestLocationUpdates(p1,p2,p3)=======================\r\n");
+                var temp = this.requestLocationUpdates(p1, p2, p3);
+                console.log("requestLocationUpdates: " + temp);
+                return temp;
+            }
+            LocationManager.requestLocationUpdates.overload('long', 'float', 'android.location.Criteria', 'android.app.PendingIntent').implementation = function (p1, p2, p3, p4) {
                 showStacks();
                 console.log("============================= [*]Called - requestLocationUpdates(p1,p2,p3,p4)=======================\r\n");
                 var temp = this.requestLocationUpdates(p1, p2, p3, p4);
                 console.log("requestLocationUpdates: " + temp);
                 return temp;
             }
-            // This method was deprecated in API level 31.
-            LocationManager.requestLocationUpdates.overload('long', 'float', 'android.location.Criteria', 'android.location.LocationListener', 'android.os.Looper').implementation = function (p1, p2, p3, p4, p5) {
+            LocationManager.requestLocationUpdates.overload('java.lang.String', 'long', 'float', 'android.app.PendingIntent').implementation = function (p1, p2, p3, p4) {
+                showStacks();
+                console.log("============================= [*]Called - requestLocationUpdates(p1,p2,p3,p4)=======================\r\n");
+                var temp = this.requestLocationUpdates(p1, p2, p3, p4);
+                console.log("requestLocationUpdates: " + temp);
+                return temp;
+            }
+            LocationManager.requestLocationUpdates.overload('java.lang.String', 'long', 'float','android.location.LocationListener').implementation = function (p1, p2, p3,p4) {
+                showStacks();
+                console.log("============================= [*]Called - requestLocationUpdates(p1,p2,p3,p4)=======================\r\n");
+                var temp = this.requestLocationUpdates(p1, p2, p3,p4);
+                console.log("requestLocationUpdates: " + temp);
+                return temp;
+            }
+            LocationManager.requestLocationUpdates.overload('long', 'float', 'android.location.Criteria', 'android.location.LocationListener','android.os.Looper').implementation = function (p1, p2, p3, p4,p5) {
                 showStacks();
                 console.log("============================= [*]Called - requestLocationUpdates(p1,p2,p3,p4,p5)=======================\r\n");
-                var temp = this.requestLocationUpdates(p1, p2, p3, p4, p5);
+                var temp = this.requestLocationUpdates(p1, p2, p3, p4,p5);
+                console.log("requestLocationUpdates: " + temp);
+                return temp;
+            }
+            LocationManager.requestLocationUpdates.overload('long', 'float', 'android.location.Criteria', 'java.util.concurrent.Executor', 'android.location.LocationListener').implementation = function (p1, p2, p3, p4,p5) {
+                showStacks();
+                console.log("============================= [*]Called - requestLocationUpdates(p1,p2,p3,p4,p5)=======================\r\n");
+                var temp = this.requestLocationUpdates(p1, p2, p3, p4,p5);
                 console.log("requestLocationUpdates: " + temp);
                 return temp;
             }
@@ -466,34 +507,6 @@ function hookGetLocation() {
                 return temp;
             }
             LocationManager.requestLocationUpdates.overload('java.lang.String', 'long', 'float', 'java.util.concurrent.Executor', 'android.location.LocationListener').implementation = function (p1, p2, p3, p4, p5) {
-                showStacks();
-                console.log("============================= [*]Called - requestLocationUpdates(p1,p2,p3,p4,p5)=======================\r\n");
-                var temp = this.requestLocationUpdates(p1, p2, p3, p4, p5);
-                console.log("requestLocationUpdates: " + temp);
-                return temp;
-            }
-            LocationManager.requestLocationUpdates.overload('java.lang.String', 'android.location.LocationRequest', 'android.app.PendingIntent').implementation = function (p1, p2, p3) {
-                showStacks();
-                console.log("============================= [*]Called - requestLocationUpdates(p1,p2,p3)=======================\r\n");
-                var temp = this.requestLocationUpdates(p1, p2, p3);
-                console.log("requestLocationUpdates: " + temp);
-                return temp;
-            }
-            LocationManager.requestLocationUpdates.overload('java.lang.String', 'android.location.LocationRequest', 'java.util.concurrent.Executor', 'android.location.LocationListener').implementation = function (p1, p2, p3, p4) {
-                showStacks();
-                console.log("============================= [*]Called - requestLocationUpdates(p1,p2,p3,p4)=======================\r\n");
-                var temp = this.requestLocationUpdates(p1, p2, p3, p4);
-                console.log("requestLocationUpdates: " + temp);
-                return temp;
-            }
-            LocationManager.requestLocationUpdates.overload('long', 'float', 'android.location.Criteria', 'android.app.PendingIntent').implementation = function (p1, p2, p3, p4) {
-                showStacks();
-                console.log("============================= [*]Called - requestLocationUpdates(p1,p2,p3,p4)=======================\r\n");
-                var temp = this.requestLocationUpdates(p1, p2, p3, p4);
-                console.log("requestLocationUpdates: " + temp);
-                return temp;
-            }
-            LocationManager.requestLocationUpdates.overload('long', 'float', 'android.location.Criteria', 'java.util.concurrent.Executor', 'android.location.LocationListener').implementation = function (p1, p2, p3, p4, p5) {
                 showStacks();
                 console.log("============================= [*]Called - requestLocationUpdates(p1,p2,p3,p4,p5)=======================\r\n");
                 var temp = this.requestLocationUpdates(p1, p2, p3, p4, p5);
