@@ -13,6 +13,13 @@
 - MacAddress
 - InstallPackages : 获取应用列表
 - RequestPermission : 判断是哪个sdk在请求权限
+- ro.serialno
+- IPAddress
+- RunningAppProcesses
+- WifiState
+- HostInfo
+- SocketConnect
+- Location
 
 
 ### IOS
@@ -26,9 +33,19 @@
 
 ### Android
 
-只在Pixel4A - Android11(Root)上测试通过
+测试环境:
 
-不同的API LEVEL在APP中有不同的处理函数，所以尽量使用Android11当测试机
+Pixel4A (5G)
+Android版本: 12
+版本号： SQ3A.220605.009.A1
+MagiskFrida 15.1.14-4
+Magisk 25.1
+
+
+frida                             15.2.2
+frida-tools                       10.2.1
+
+环境问题的影响很大，尽量在上述环境下使用该脚本
 
 ### IOS
 
