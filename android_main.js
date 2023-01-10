@@ -315,6 +315,26 @@ function hookGetWifiState() {
     }
 }
 
+// 获取网络状态信息
+function hookGetActiveNetworkInfo() {
+    // This method was deprecated in API level 29.
+    try {
+        var CM = Java.use("android.net.ConnectivityManager");
+        if (CM.getActiveNetworkInfo != undefined) {
+            CM.getActiveNetworkInfo.implementation = function () {
+                var tmp_index = get_tmp_index();
+                showStacks(tmp_index);
+                log_with_index(tmp_index, "============================= [*]Called - getActiveNetworkInfo()=======================\r\n");
+                var temp = this.getActiveNetworkInfo();
+                log_with_index(tmp_index, "getActiveNetworkInfo: " + temp);
+                return temp;
+            }
+        }
+    } catch (e) {
+        log_with_index(-1, "Function hookGetActiveNetworkInfo-android.net.ConnectivityManager failed. reason:" + e)
+    }
+}
+
 // 获取hostaddress、hostname信息
 function hookGetHostInfo() {
     try {
@@ -688,6 +708,7 @@ Java.perform(function () {
     hookGetIPAddress();
     hookGetRunningAppProcesses();
     hookGetWifiState();
+    hookGetActiveNetworkInfo();
     hookGetHostInfo();
     hookGetLocation();
     hookGetInstallPackages();
