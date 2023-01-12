@@ -220,6 +220,35 @@ function hookGetIMEI() {
     }
 }
 
+
+// 获取MEID信息
+function hookGetMEID() {
+    try {
+        var TelephonyManager = Java.use("android.telephony.TelephonyManager");
+        if (TelephonyManager.getMeid != undefined) {
+            TelephonyManager.getMeid.overload().implementation = function () {
+                var tmp_index = get_tmp_index();
+                showStacks(tmp_index);
+                log_with_index(tmp_index, "============================= [*]Called - getMeid()=======================\r\n");
+                var temp = this.getMeid();
+                log_with_index(tmp_index, "getDeviceId: " + temp);
+                return temp;
+            };
+            TelephonyManager.getMeid.overload('int').implementation = function (p) {
+                var tmp_index = get_tmp_index();
+                showStacks(tmp_index);
+                log_with_index(tmp_index, "============================= [*]Called - getMeid()=======================param is" + p + "\r\n");
+                var temp = this.getMeid(p);
+                log_with_index(tmp_index, "getMeid " + p + ": " + temp);
+                return temp;
+            };
+        }
+    } catch (e) {
+        log_with_index(-1, "Function hookGetMEID-android.telephony.TelephonyManager failed. reason:" + e)
+    }
+}
+
+
 // 获取Mac地址信息
 function hookGetMacAddress() {
     try {
@@ -704,6 +733,7 @@ Java.perform(function () {
     hookGetAndroidId();
     hookGetIMSI();
     hookGetIMEI();
+    hookGetMEID();
     hookGetMacAddress();
     hookGetIPAddress();
     hookGetRunningAppProcesses();
