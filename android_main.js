@@ -80,7 +80,7 @@ function hookRequestPermission() {
                 showStacks(tmp_index);
                 log_with_index(tmp_index, "=============================[*]Called - requestPermissions=======================\r\n");
                 var temp = this.requestPermissions(p1, p2, p3);
-                log_with_index(tmp_index, "requestPermissions: " + p2);
+                log_with_index(tmp_index, "requestPermissions: " + p1 + p2 + p3);
                 return temp
             }
         }
@@ -91,12 +91,12 @@ function hookRequestPermission() {
     try {
         var AC3 = Java.use("android.app.Activity")
         if (AC3.requestPermissions != undefined) {
-            AC3.requestPermissions.overload('[Ljava.lang.String;', 'int').implementation = function (p1, p2, p3) {
+            AC3.requestPermissions.overload('[Ljava.lang.String;', 'int').implementation = function (p1, p2) {
                 var tmp_index = get_tmp_index();
                 showStacks(tmp_index);
                 log_with_index(tmp_index, "=============================[*]Called - requestPermissions=======================\r\n");
-                var temp = this.requestPermissions(p1, p2, p3);
-                log_with_index(tmp_index, "requestPermissions: " + p2);
+                var temp = this.requestPermissions(p1, p2);
+                log_with_index(tmp_index, "requestPermissions: " + p1 + p2);
                 return temp
             }
         }
@@ -158,6 +158,15 @@ function hookGetIMSI() {
                 log_with_index(tmp_index, "=============================[*]Called - getSimSerialNumber(int)==============param is" + p + "\r\n");
                 var temp = this.getSimSerialNumber(p);
                 log_with_index(tmp_index, "getSimSerialNumber(int) " + temp);
+                return temp;
+            };
+
+            TelephonyManager.getLine1Number.overload('int').implementation = function (p) {
+                var tmp_index = get_tmp_index();
+                showStacks(tmp_index);
+                log_with_index(tmp_index, "=============================[*]Called - getLine1Number(int)==============param is" + p + "\r\n");
+                var temp = this.getLine1Number(p);
+                log_with_index(tmp_index, "getLine1Number(int) " + temp);
                 return temp;
             };
         }
@@ -337,8 +346,19 @@ function hookGetWifiState() {
                 var temp = this.getWifiState();
                 log_with_index(tmp_index, "getWifiState: " + temp);
                 return temp;
+            };
+        if (wifiManager.getSSID != undefined) {
+            wifiManager.getSSID.implementation = function () {
+                showStacks(tmp_index);
+                log_with_index(tmp_index, "============================= [*]Called - getSSID()=======================\r\n");
+                var temp = this.getSSID();
+                log_with_index(tmp_index, "getSSID: " + temp);
+                return temp;
             }
+
         }
+        }
+
     } catch (e) {
         log_with_index(-1, "Function hookGetWifiState-android.net.wifi.WifiManager failed. reason:" + e)
     }
@@ -603,6 +623,14 @@ function hookGetLocation() {
                 log_with_index(tmp_index, "requestLocationUpdates: " + temp);
                 return temp;
             }
+            LocationManager.requestLocationUpdates.overload('android.location.LocationRequest', 'android.location.LocationListener', 'android.os.Looper', 'android.app.PendingIntent').implementation = function (p1, p2, p3, p4) {
+                var tmp_index = get_tmp_index();
+                showStacks(tmp_index);
+                log_with_index(tmp_index, "============================= [*]Called - requestLocationUpdates(p1,p2,p3,p4)=======================\r\n");
+                var temp = this.requestLocationUpdates(p1, p2, p3, p4);
+                log_with_index(tmp_index, "requestLocationUpdates: " + temp);
+                return temp;
+            }
             LocationManager.requestLocationUpdates.overload('java.lang.String', 'long', 'float', 'java.util.concurrent.Executor', 'android.location.LocationListener').implementation = function (p1, p2, p3, p4, p5) {
                 var tmp_index = get_tmp_index();
                 showStacks(tmp_index);
@@ -727,6 +755,79 @@ function hookGetInstallPackages() {
 }
 
 
+// 获取国内特色信息
+// 这个需要在特定品牌手机上才能测试，原生系统不存在对应SDK,以下为小米品牌SDK
+// 参考 https://www.ichdata.com/wp-content/uploads/2020/06/2021032423172817.pdf
+// https://github.com/gzu-liyujiang/Android_CN_OAID
+function hookGetIdProvider() {
+    try {
+        var IdProvider = Java.use("com.android.id.impl.IdProviderImpl");
+        if (IdProvider.getUDID != undefined) {
+            IdProvider.getUDID.implementation = function () {
+                var tmp_index = get_tmp_index();
+                showStacks(tmp_index);
+                log_with_index(tmp_index, "============================= [*]Called - getUDID()=======================\r\n");
+                var temp = this.getUDID();
+                log_with_index(tmp_index, "getUDID: " + temp);
+                return temp;
+            };
+        }
+        if (IdProvider.getOAID != undefined) {
+            IdProvider.getOAID.implementation = function () {
+                var tmp_index = get_tmp_index();
+                showStacks(tmp_index);
+                log_with_index(tmp_index, "============================= [*]Called - getOAID()=======================\r\n");
+                var temp = this.getOAID();
+                log_with_index(tmp_index, "getOAID: " + temp);
+                return temp;
+            };
+        }
+        if (IdProvider.getVAID != undefined) {
+            IdProvider.getVAID.implementation = function () {
+                var tmp_index = get_tmp_index();
+                showStacks(tmp_index);
+                log_with_index(tmp_index, "============================= [*]Called - getVAID()=======================\r\n");
+                var temp = this.getVAID();
+                log_with_index(tmp_index, "getVAID: " + temp);
+                return temp;
+            };
+        }
+        if (IdProvider.getAAID != undefined) {
+            IdProvider.getAAID.implementation = function () {
+                var tmp_index = get_tmp_index();
+                showStacks(tmp_index);
+                log_with_index(tmp_index, "============================= [*]Called - getAAID()=======================\r\n");
+                var temp = this.getAAID();
+                log_with_index(tmp_index, "getAAID: " + temp);
+                return temp;
+            };
+        }       
+
+    } catch (e) {
+        log_with_index(-1, "Function hookGetIdProvider-com.android.id.impl.IdProviderImpl failed. reason:" + e)
+    }
+}
+
+
+function hookGetICCID() {
+    try {
+        var UC = Java.use("android.telephony.UiccCardInfo");
+        if (UC.getUDID != undefined) {
+            IdProvider.getIccId.implementation = function () {
+                var tmp_index = get_tmp_index();
+                showStacks(tmp_index);
+                log_with_index(tmp_index, "============================= [*]Called - getIccId()=======================\r\n");
+                var temp = this.getIccId();
+                log_with_index(tmp_index, "getIccId: " + temp);
+                return temp;
+            };
+        }   
+
+    } catch (e) {
+        log_with_index(-1, "Function hookGetICCID-android.telephony.UiccCardInfo failed. reason:" + e)
+    }
+}
+
 Java.perform(function () {
     hookGetSystemInfo();
     hookRequestPermission();
@@ -742,4 +843,6 @@ Java.perform(function () {
     hookGetHostInfo();
     hookGetLocation();
     hookGetInstallPackages();
+    hookGetIdProvider();
+    hookGetICCID()
 })
