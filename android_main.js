@@ -759,6 +759,7 @@ function hookGetInstallPackages() {
 // 这个需要在特定品牌手机上才能测试，原生系统不存在对应SDK,以下为小米品牌SDK
 // 参考 https://www.ichdata.com/wp-content/uploads/2020/06/2021032423172817.pdf
 // https://github.com/gzu-liyujiang/Android_CN_OAID
+//xiaomi
 function hookGetIdProvider() {
     try {
         var IdProvider = Java.use("com.android.id.impl.IdProviderImpl");
@@ -773,11 +774,11 @@ function hookGetIdProvider() {
             };
         }
         if (IdProvider.getOAID != undefined) {
-            IdProvider.getOAID.implementation = function () {
+            IdProvider.getOAID.overload('android.content.Context').implementation = function (p1) {
                 var tmp_index = get_tmp_index();
                 showStacks(tmp_index);
-                log_with_index(tmp_index, "============================= [*]Called - getOAID()=======================\r\n");
-                var temp = this.getOAID();
+                log_with_index(tmp_index, "============================= [*]Called - getOAID(p1)=======================\r\n");
+                var temp = this.getOAID(p1);
                 log_with_index(tmp_index, "getOAID: " + temp);
                 return temp;
             };
@@ -808,6 +809,82 @@ function hookGetIdProvider() {
     }
 }
 
+// samsung
+function hookGetIDeviceIdService() {
+    try {
+        var IdProvider = Java.use("com.samsung.android.deviceidservice.IDeviceIdService$Stub$Proxy");
+        if (IdProvider.getOAID != undefined) {
+            IdProvider.getOAID.implementation = function () {
+                var tmp_index = get_tmp_index();
+                showStacks(tmp_index);
+                log_with_index(tmp_index, "============================= [*]Called - getOAID()=======================\r\n");
+                var temp = this.getOAID();
+                log_with_index(tmp_index, "getOAID: " + temp);
+                return temp;
+            };
+        }
+        if (IdProvider.getVAID != undefined) {
+            IdProvider.getVAID.overload('java.lang.String').implementation = function (p1) {
+                var tmp_index = get_tmp_index();
+                showStacks(tmp_index);
+                log_with_index(tmp_index, "============================= [*]Called - getVAID(p1)=======================\r\n");
+                var temp = this.getVAID(p1);
+                log_with_index(tmp_index, "getVAID: " + temp);
+                return temp;
+            };
+        }
+        if (IdProvider.getAAID != undefined) {
+            IdProvider.getAAID.overload('java.lang.String').implementation = function (p1) {
+                var tmp_index = get_tmp_index();
+                showStacks(tmp_index);
+                log_with_index(tmp_index, "============================= [*]Called - getAAID(p1)=======================\r\n");
+                var temp = this.getAAID(p1);
+                log_with_index(tmp_index, "getAAID: " + temp);
+                return temp;
+            };
+        }       
+
+    } catch (e) {
+        log_with_index(-1, "Function hookGetIDeviceIdService-com.samsung.android.deviceidservice.IDeviceIdService$Stub$Proxy failed. reason:" + e)
+    }
+
+    try {
+        var IdProvider = Java.use("repeackage.com.samsung.android.deviceidservice.IDeviceIdService$Stub$Proxy");
+        if (IdProvider.getOAID != undefined) {
+            IdProvider.getOAID.implementation = function () {
+                var tmp_index = get_tmp_index();
+                showStacks(tmp_index);
+                log_with_index(tmp_index, "============================= [*]Called - getOAID()=======================\r\n");
+                var temp = this.getOAID();
+                log_with_index(tmp_index, "getOAID: " + temp);
+                return temp;
+            };
+        }
+        if (IdProvider.getVAID != undefined) {
+            IdProvider.getVAID.overload('java.lang.String').implementation = function (p1) {
+                var tmp_index = get_tmp_index();
+                showStacks(tmp_index);
+                log_with_index(tmp_index, "============================= [*]Called - getVAID(p1)=======================\r\n");
+                var temp = this.getVAID(p1);
+                log_with_index(tmp_index, "getVAID: " + temp);
+                return temp;
+            };
+        }
+        if (IdProvider.getAAID != undefined) {
+            IdProvider.getAAID.overload('java.lang.String').implementation = function (p1) {
+                var tmp_index = get_tmp_index();
+                showStacks(tmp_index);
+                log_with_index(tmp_index, "============================= [*]Called - getAAID(p1)=======================\r\n");
+                var temp = this.getAAID(p1);
+                log_with_index(tmp_index, "getAAID: " + temp);
+                return temp;
+            };
+        }       
+
+    } catch (e) {
+        log_with_index(-1, "Function hookGetIDeviceIdServicerepeackage.com.samsung.android.deviceidservice.IDeviceIdService$Stub$Proxy failed. reason:" + e)
+    }
+}
 
 function hookGetICCID() {
     try {
@@ -844,5 +921,6 @@ Java.perform(function () {
     hookGetLocation();
     hookGetInstallPackages();
     hookGetIdProvider();
+    hookGetIDeviceIdService();
     hookGetICCID()
 })
