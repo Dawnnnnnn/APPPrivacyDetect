@@ -889,8 +889,8 @@ function hookGetIDeviceIdService() {
 function hookGetICCID() {
     try {
         var UC = Java.use("android.telephony.UiccCardInfo");
-        if (UC.getUDID != undefined) {
-            IdProvider.getIccId.implementation = function () {
+        if (UC.getIccId != undefined) {
+            UC.getIccId.implementation = function () {
                 var tmp_index = get_tmp_index();
                 showStacks(tmp_index);
                 log_with_index(tmp_index, "============================= [*]Called - getIccId()=======================\r\n");
@@ -904,6 +904,54 @@ function hookGetICCID() {
         log_with_index(-1, "Function hookGetICCID-android.telephony.UiccCardInfo failed. reason:" + e)
     }
 }
+
+function hookGetSensorList() {
+    try {
+        var SM = Java.use("android.hardware.SensorManager");
+        if (SM.getSensorList != undefined) {
+            SM.getSensorList.overload('int').implementation = function (p1) {
+                var tmp_index = get_tmp_index();
+                showStacks(tmp_index);
+                log_with_index(tmp_index, "============================= [*]Called - getSensorList()=======================\r\n");
+                var temp = this.getSensorList(p1);
+                log_with_index(tmp_index, "getSensorList: " + temp);
+                return temp;
+            };
+        }   
+
+    } catch (e) {
+        log_with_index(-1, "Function hookGetSensorList-android.hardware.SensorManager failed. reason:" + e)
+    }
+}
+
+function hookStartActivity() {
+    try {
+        var UC = Java.use("android.app.Activity");
+        if (UC.startActivity != undefined) {
+            UC.startActivity.overload('android.content.Intent').implementation = function (p1) {
+                var tmp_index = get_tmp_index();
+                showStacks(tmp_index);
+                log_with_index(tmp_index, "============================= [*]Called - startActivity(p1)=======================\r\n");
+                var temp = this.startActivity(p1);
+                log_with_index(tmp_index, "startActivity: " + temp + p1);
+                return temp;
+            };
+            UC.startActivity.overload('android.content.Intent', 'android.os.Bundle').implementation = function (p1,p2) {
+                var tmp_index = get_tmp_index();
+                showStacks(tmp_index);
+                log_with_index(tmp_index, "============================= [*]Called - startActivity(p1,p2)=======================\r\n");
+                var temp = this.startActivity(p1,p2);
+                log_with_index(tmp_index, "startActivity: " + temp + p1 + p2);
+                return temp;
+            };
+        }   
+
+    } catch (e) {
+        log_with_index(-1, "Function hookStartActivity-android.app.Activity failed. reason:" + e)
+    }
+}
+
+
 
 Java.perform(function () {
     hookGetSystemInfo();
@@ -923,4 +971,5 @@ Java.perform(function () {
     hookGetIdProvider();
     hookGetIDeviceIdService();
     hookGetICCID()
+    hookGetSensorList()
 })
