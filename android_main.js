@@ -358,6 +358,17 @@ function hookGetWifiState() {
 
         }
         }
+        var WifiInfo = Java.use("android.net.wifi.WifiInfo");
+        if (WifiInfo.getSSID != undefined) {
+            WifiInfo.getSSID.implementation = function () {
+                var tmp_index = get_tmp_index();
+                showStacks(tmp_index);
+                log_with_index(tmp_index, "============================= [*]Called - getSSID()=======================\r\n");
+                var temp = this.getSSID();
+                log_with_index(tmp_index, "getSSID: " + temp);
+                return temp;
+            };
+        }
 
     } catch (e) {
         log_with_index(-1, "Function hookGetWifiState-android.net.wifi.WifiManager failed. reason:" + e)
@@ -663,6 +674,22 @@ function hookGetLocation() {
                 log_with_index(tmp_index, "getCurrentLocation: " + temp);
                 return temp;
             }
+            LocationManager.getProviders.overload('java.lang.Boolean').implementation = function (p1) {
+                var tmp_index = get_tmp_index();
+                showStacks(tmp_index);
+                log_with_index(tmp_index, "============================= [*]Called - getProviders(p1)=======================\r\n");
+                var temp = this.getProviders(p1);
+                log_with_index(tmp_index, "getProviders: " + temp);
+                return temp;
+            }
+            LocationManager.getProviders.overload('android.location.Criteria','java.lang.Boolean').implementation = function (p1,p2) {
+                var tmp_index = get_tmp_index();
+                showStacks(tmp_index);
+                log_with_index(tmp_index, "============================= [*]Called - getProviders(p1,p2)=======================\r\n");
+                var temp = this.getProviders(p1,p2);
+                log_with_index(tmp_index, "getProviders: " + temp);
+                return temp;
+            }
         }
     } catch (e) {
         log_with_index(-1, "Function hookGetLocation-android.location.LocationManager failed. reason:" + e)
@@ -952,6 +979,113 @@ function hookStartActivity() {
 }
 
 
+function hookGetPackageInfo() {
+    try {
+        var PM = Java.use("android.app.ApplicationPackageManager");
+        if (PM.getPackageInfo != undefined) {
+            PM.getPackageInfo.overload('java.lang.String','int').implementation = function (p1,p2) {
+                var tmp_index = get_tmp_index();
+                showStacks(tmp_index);
+                log_with_index(tmp_index, "============================= [*]Called - GetPackageInfo(p1,p2)=======================\r\n");
+                var temp = this.getPackageInfo(p1,p2);
+                log_with_index(tmp_index, "GetPackageInfo: " + temp);
+                return temp;
+            };
+
+            PM.getPackageInfo.overload('java.lang.String','android.content.pm.PackageManager.PackageInfoFlags').implementation = function (p1,p2) {
+                var tmp_index = get_tmp_index();
+                showStacks(tmp_index);
+                log_with_index(tmp_index, "============================= [*]Called - GetPackageInfo(p1,p2)=======================\r\n");
+                var temp = this.getPackageInfo(p1,p2);
+                log_with_index(tmp_index, "GetPackageInfo: " + temp);
+                return temp;
+            };
+
+            PM.getPackageInfo.overload('android.content.pm.VersionedPackage','android.content.pm.PackageManager.PackageInfoFlags').implementation = function (p1,p2) {
+                var tmp_index = get_tmp_index();
+                showStacks(tmp_index);
+                log_with_index(tmp_index, "============================= [*]Called - GetPackageInfo(p1,p2)=======================\r\n");
+                var temp = this.getPackageInfo(p1,p2);
+                log_with_index(tmp_index, "GetPackageInfo: " + temp);
+                return temp;
+            };
+
+            PM.getPackageInfo.overload('android.content.pm.VersionedPackage','int').implementation = function (p1,p2) {
+                var tmp_index = get_tmp_index();
+                showStacks(tmp_index);
+                log_with_index(tmp_index, "============================= [*]Called - GetPackageInfo(p1,p2)=======================\r\n");
+                var temp = this.getPackageInfo(p1,p2);
+                log_with_index(tmp_index, "GetPackageInfo: " + temp);
+                return temp;
+            };
+
+        }   
+
+    } catch (e) {
+        log_with_index(-1, "Function hookGetPackageInfo-aandroid.app.ApplicationPackageManager failed. reason:" + e)
+    }
+}
+
+
+function hookGetExtraInfo() {
+    try {
+        var NW = Java.use("android.net.NetworkInfo");
+        if (NW.getExtraInfo != undefined) {
+            NW.getExtraInfo.implementation = function () {
+                var tmp_index = get_tmp_index();
+                showStacks(tmp_index);
+                log_with_index(tmp_index, "============================= [*]Called - getExtraInfo()=======================\r\n");
+                var temp = this.getExtraInfo();
+                log_with_index(tmp_index, "getExtraInfo: " + temp);
+                return temp;
+            };
+        }   
+
+    } catch (e) {
+        log_with_index(-1, "Function hookGetExtraInfo-android.net.NetworkInfo failed. reason:" + e)
+    }
+}
+
+
+function hookGetExternalStorageDirectory() {
+    try {
+        var ENV = Java.use("android.os.Environment");
+        if (ENV.getExternalStorageDirectory != undefined) {
+            ENV.getExternalStorageDirectory.implementation = function () {
+                var tmp_index = get_tmp_index();
+                showStacks(tmp_index);
+                log_with_index(tmp_index, "============================= [*]Called - getExternalStorageDirectory()=======================\r\n");
+                var temp = this.getExternalStorageDirectory();
+                log_with_index(tmp_index, "getExternalStorageDirectory: " + temp);
+                return temp;
+            };
+        }   
+
+    } catch (e) {
+        log_with_index(-1, "Function hookGetExternalStorageDirectory-android.os.Environment failed. reason:" + e)
+    }
+}
+
+function hookGetMediaAttribute() {
+    try {
+        var ME = Java.use("android.media.ExifInterface");
+        if (ME.getAttribute != undefined) {
+            ME.getAttribute.overload('java.lang.String').implementation = function (p1) {
+                var tmp_index = get_tmp_index();
+                showStacks(tmp_index);
+                log_with_index(tmp_index, "============================= [*]Called - getAttribute(p1)=======================\r\n");
+                var temp = this.getAttribute(p1);
+                log_with_index(tmp_index, "getAttribute: " + temp);
+                return temp;
+            };
+        }   
+
+    } catch (e) {
+        log_with_index(-1, "Function hookGetMediaAttribute-android.media.ExifInterface failed. reason:" + e)
+    }
+}
+
+
 
 Java.perform(function () {
     hookGetSystemInfo();
@@ -970,6 +1104,10 @@ Java.perform(function () {
     hookGetInstallPackages();
     hookGetIdProvider();
     hookGetIDeviceIdService();
-    hookGetICCID()
-    hookGetSensorList()
+    hookGetICCID();
+    hookGetSensorList();
+    hookGetExternalStorageDirectory();
+    hookGetExtraInfo();
+    hookGetPackageInfo();
+    hookGetMediaAttribute();
 })
